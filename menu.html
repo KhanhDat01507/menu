@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Các trang web dạy học</title>
+    <style>
+        /* 1. RESET & THIẾT LẬP CHUNG TRÊN TOÀN MÀN HÌNH */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: #050505; /* Nền đen sâu chuẩn ảnh mẫu */
+            color: #ffffff;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            padding: 40px 0; /* Khoảng cách trên dưới */
+        }
+
+        /* Container chiếm FULL 100% chiều rộng màn hình, có padding 2 bên để không chạm sát mép */
+        .wrapper {
+            width: 100%;
+            max-width: 100%; /* Cho phép bung hết cỡ trên màn hình lớn */
+            padding-left: 5%;  /* Tạo khoảng thở tỷ lệ % linh hoạt ở hai bên */
+            padding-right: 5%;
+        }
+
+        /* 2. PHẦN TIÊU ĐỀ (TITLE BAR) */
+        .title-container {
+            display: flex;
+            align-items: center;
+            margin-bottom: 40px;
+        }
+
+        .title-container h1 {
+            font-size: 2.8rem; /* Cỡ chữ lớn, sang trọng */
+            font-weight: 700;
+            padding-left: 20px;
+            border-left: 6px solid #00cd6c; /* Thanh đứng màu xanh lá đặc trưng */
+            line-height: 1;
+            letter-spacing: -0.5px;
+        }
+
+        /* 3. DANH SÁCH MENU TRẢI DÀI */
+        .menu-list {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+        }
+
+        /* Mỗi hàng menu chiếm trọn 100% chiều rộng vùng chứa */
+        .menu-row {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            padding: 24px 15px; /* Tăng padding để hàng trông thoáng và "full" hơn */
+            border-bottom: 1px solid #16161a; /* Đường kẻ phân tách siêu mảnh */
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+        }
+
+        /* Đường kẻ trên cùng cho hàng đầu tiên */
+        .menu-list .menu-row:first-child {
+            border-top: 1px solid #16161a;
+        }
+
+        /* Ô chứa ảnh thu nhỏ (Thumbnail) chiếm tỷ lệ cố định */
+        .menu-thumbnail {
+            width: 140px;       /* Tăng kích thước trên màn hình lớn để xứng tầm giao diện Full */
+            height: 84px;       /* Tỷ lệ vàng 5:3 */
+            margin-right: 35px; /* Khoảng cách rộng rãi giữa ảnh và chữ */
+            overflow: hidden;
+            border-radius: 8px;
+            border: 1px solid #222;
+            flex-shrink: 0;     /* Ép ảnh không được méo */
+        }
+
+        .menu-thumbnail img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* Cắt ảnh thông minh vừa vặn với ô chứa */
+        }
+
+        /* Phần chữ tiêu đề menu */
+        .menu-text {
+            font-size: 1.3rem; /* Tăng kích thước chữ cho dễ đọc trên màn hình lớn */
+            color: #eeeeee;
+            font-weight: 500;
+            flex-grow: 1;      /* Chiếm trọn phần không gian còn lại ở giữa và bên phải */
+            transition: color 0.2s ease, transform 0.2s ease;
+        }
+
+        /* 4. HIỆU ỨNG TƯƠNG TÁC (HOVER EFFECT) */
+        .menu-row:hover {
+            background-color: #0d0d11; /* Nền hàng sáng nhẹ lên một chút tạo chiều sâu */
+        }
+
+        .menu-row:hover .menu-text {
+            color: #00cd6c; /* Chữ chuyển sang màu xanh lá theo thanh tiêu đề */
+            transform: translateX(10px); /* Chữ dịch nhẹ sang phải 10px tạo hiệu ứng chuyển động cực mượt */
+        }
+
+        /* ==========================================================================
+           5. BREAKPOINTS RESPONSIVE (TỰ ĐỘNG THÍCH ỨNG THIẾT BỊ)
+           ========================================================================== */
+
+        /* --- DÀNH CHO MÀN HÌNH MÁY TÍNH BẢNG VÀ LAPTOP NHỎ (Dưới 992px) --- */
+        @media (max-width: 992px) {
+            .title-container h1 {
+                font-size: 2.2rem;
+            }
+            .menu-thumbnail {
+                width: 110px;
+                height: 66px;
+                margin-right: 25px;
+            }
+            .menu-text {
+                font-size: 1.15rem;
+            }
+            .menu-row {
+                padding: 18px 10px;
+            }
+        }
+
+        /* --- DÀNH CHO MÀN HÌNH ĐIỆN THOẠI DI ĐỘNG (Dưới 576px) --- */
+        @media (max-width: 576px) {
+            body {
+                padding: 25px 0;
+            }
+            .wrapper {
+                padding-left: 15px; /* Thu hẹp khoảng cách mép trên điện thoại để tối ưu không gian */
+                padding-right: 15px;
+            }
+            .title-container {
+                margin-bottom: 25px;
+            }
+            .title-container h1 {
+                font-size: 1.8rem;
+            }
+            
+            /* CHUYỂN ĐỔI BỐ CỤC: Trên mobile, ảnh và chữ sẽ xếp thành hàng dọc */
+            .menu-row {
+                flex-direction: column;
+                align-items: flex-start; /* Căn lề trái toàn bộ */
+                padding: 20px 5px;
+                gap: 15px; /* Tạo khoảng cách giữa ảnh (ở trên) và chữ (ở dưới) */
+            }
+
+            .menu-thumbnail {
+                width: 100%; /* Ảnh thumbnail bung rộng 100% màn hình điện thoại nhìn rất đã mắt */
+                height: 160px; /* Tăng chiều cao của ảnh trên mobile */
+                margin-right: 0;
+            }
+
+            .menu-text {
+                font-size: 1.1rem;
+                line-height: 1.4;
+            }
+            
+            /* Trên mobile, tắt hiệu ứng dịch chữ sang phải khi hover để tránh lỗi hiển thị */
+            .menu-row:hover .menu-text {
+                transform: none; 
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="wrapper">
+        <div class="title-container">
+            <h1>Menu</h1>
+        </div>
+
+        <div class="menu-list">
+            
+            <a href="index.html" class="menu-row">
+                <div class="menu-thumbnail">
+                    <img src="manu1.png" alt="Menu 1">
+                </div>
+                <div class="menu-text">MÔ PHỎNG HỆ THỐNG KHAI BÁO HẢI QUAN ECUS5 - VNACCS</div>
+            </a>
+
+            <a href="mau1.html" class="menu-row">
+                <div class="menu-thumbnail">
+                    <img src="menu2.png" alt="Menu 2">
+                </div>
+                <div class="menu-text">PHẦN MỀM NỘP THUẾ & THÔNG QUAN HẢI QUAN</div>
+            </a>
+
+            <a href=" " class="menu-row">
+                <div class="menu-thumbnail">
+                    <img src=" " alt="Menu 3">
+                </div>
+                <div class="menu-text">Menu 3 </div>
+            </a>
+
+            <a href=" " class="menu-row">
+                <div class="menu-thumbnail">
+                    <img src=" " alt="Menu 4">
+                </div>
+                <div class="menu-text">Menu 4 </div>
+            </a>
+
+            <a href=" " class="menu-row">
+                <div class="menu-thumbnail">
+                    <img src=" " alt="Menu 4">
+                </div>
+                <div class="menu-text">Menu 5 </div>
+            </a>
+
+            <a href=" " class="menu-row">
+                <div class="menu-thumbnail">
+                    <img src=" " alt="Menu 5">
+                </div>
+                <div class="menu-text">Menu 6 </div>
+            </a>
+
+            <a href=" " class="menu-row">
+                <div class="menu-thumbnail">
+                    <img src=" " alt="Menu 5">
+                </div>
+                <div class="menu-text">Menu 7 </div>
+            </a>
+
+        </div>
+    </div>
+
+</body>
+</html>
