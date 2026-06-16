@@ -5,166 +5,308 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Các trang web dạy học</title>
     <style>
-        /* 1. RESET & THIẾT LẬP CHUNG TRÊN TOÀN MÀN HÌNH */
+        /* ==========================================================================
+           HỆ THỐNG BIẾN MÀU THEO CHÍNH XÁC PALETTE ĐỒNG BỘ THEO MÁY
+           ========================================================================== */
+        
+        /* 1. CHẾ ĐỘ SÁNG: WHITE & BLUE PREMIUM (ĐỒNG BỘ THEO BẢNG MÀU CỦA BẠN) */
+        :root {
+            --bg-body: #F0F3FA;          /* Màu thứ 1: Nền tổng thể trắng xanh mượt mà[cite: 6] */
+            --card-item-bg: #ffffff;     /* Nền card menu trắng tinh khiết nổi bật[cite: 6] */
+            --border-item: #D5DEEF;      /* Màu thứ 2: Làm đường viền rạch ròi, tinh tế[cite: 6] */
+            
+            --text-title: #395886;       /* Màu thứ 6: Xanh đậm nhất tôn vinh tiêu đề[cite: 6] */
+            --text-main: #395886;        /* Tên danh mục hiển thị đậm đà, rõ nét[cite: 6] */
+            --accent-color: #628ECB;     /* Màu thứ 5: Màu xanh nhấn dẫn đường[cite: 6] */
+            --accent-glow: rgba(57, 88, 134, 0.1); /*[cite: 6] */
+            
+            --thumbnail-border: #B1C9EF; /* Màu thứ 3: Làm viền nhẹ cho ảnh thumbnail[cite: 6] */
+            
+            /* Hệ thống đổ bóng chống chìm tuyệt đối[cite: 6] */
+            --item-shadow: 0 4px 12px rgba(57, 88, 134, 0.05), 0 2px 4px rgba(57, 88, 134, 0.02); /*[cite: 6] */
+            --item-shadow-hover: 0 15px 30px -5px rgba(57, 88, 134, 0.22), 0 8px 15px -5px rgba(57, 88, 134, 0.08); /*[cite: 6] */
+        }
+
+        /* 2. CHẾ ĐỘ TỐI: GAMING CYBERPUNK (ĐEN - XANH LÁ) */
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg-body: #060608; /*[cite: 6] */
+                --card-item-bg: #121215; /*[cite: 6] */
+                --border-item: #25252b; /*[cite: 6] */
+                
+                --text-title: #ffffff; /*[cite: 6] */
+                --text-main: #e4e4e7; /*[cite: 6] */
+                --accent-color: #00cd6c; /* Màu xanh lá cá tính[cite: 6] */
+                --accent-glow: rgba(0, 205, 108, 0.15); /*[cite: 6] */
+                
+                --thumbnail-border: #25252b; /*[cite: 6] */
+                
+                --item-shadow: 0 4px 15px rgba(0, 0, 0, 0.4); /*[cite: 6] */
+                --item-shadow-hover: 0 0 25px rgba(0, 205, 108, 0.3), 0 10px 20px rgba(0, 0, 0, 0.5); /*[cite: 6] */
+            }
+        }
+
+        /* ==========================================================================
+           CẤU TRÚC GIAO DIỆN CAO CẤP VÀ NỔI KHỐI (UI/UX PREMIUM)
+           ========================================================================== */
         * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
+            box-sizing: border-box; /*[cite: 6] */
+            margin: 0; /*[cite: 6] */
+            padding: 0; /*[cite: 6] */
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            background-color: #050505; /* Nền đen sâu chuẩn ảnh mẫu */
-            color: #ffffff;
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            padding: 40px 0; /* Khoảng cách trên dưới */
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; /*[cite: 6] */
+            background-color: var(--bg-body); /*[cite: 6] */
+            color: var(--text-main); /*[cite: 6] */
+            min-height: 100vh; /*[cite: 6] */
+            display: flex; /*[cite: 6] */
+            justify-content: center; /*[cite: 6] */
+            align-items: flex-start; /*[cite: 6] */
+            padding: 80px 24px;  /*[cite: 6] */
+            transition: background-color 0.4s ease; /*[cite: 6] */
         }
 
-        /* Container chiếm FULL 100% chiều rộng màn hình, có padding 2 bên để không chạm sát mép */
         .wrapper {
-            width: 100%;
-            max-width: 100%; /* Cho phép bung hết cỡ trên màn hình lớn */
-            padding-left: 5%;  /* Tạo khoảng thở tỷ lệ % linh hoạt ở hai bên */
-            padding-right: 5%;
+            width: 100%; /*[cite: 6] */
+            max-width: 1100px; /* Giới hạn độ rộng hoàn hảo cho tầm mắt trắc diện[cite: 6] */
         }
 
-        /* 2. PHẦN TIÊU ĐỀ (TITLE BAR) */
+        /* ĐÃ CẬP NHẬT: Khu vực tiêu đề lớn chứa cả logo và chữ đồng bộ file tổng */
         .title-container {
+            display: flex; /*[cite: 6] */
+            align-items: center; /*[cite: 6] */
+            gap: 20px;                  /* Khoảng cách giữa cụm logo và chữ */
+            margin-bottom: 45px; /*[cite: 6] */
+            padding-left: 4px; /*[cite: 6] */
+        }
+
+        /* Khung bọc logo khống chế kích thước */
+        .title-logo {
+            width: 54px;                /* Độ rộng logo vừa vặn với chữ h1 lớn */
+            height: 54px; 
             display: flex;
             align-items: center;
-            margin-bottom: 40px;
+            justify-content: center;
+            flex-shrink: 0;             /* Không bị bóp méo logo trên mobile */
+        }
+
+        .title-logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;        /* Giữ nguyên tỷ lệ gốc của ảnh */
         }
 
         .title-container h1 {
-            font-size: 2.8rem; /* Cỡ chữ lớn, sang trọng */
-            font-weight: 700;
-            padding-left: 20px;
-            border-left: 6px solid #00cd6c; /* Thanh đứng màu xanh lá đặc trưng */
-            line-height: 1;
-            letter-spacing: -0.5px;
+            font-size: 2.4rem;  /*[cite: 6] */
+            font-weight: 850; /*[cite: 6] */
+            color: var(--text-title); /*[cite: 6] */
+            line-height: 1.1;
+            padding-left: 20px; /*[cite: 6] */
+            border-left: 6px solid var(--text-title); /* Chạy viền đứng theo màu tiêu đề[cite: 6] */
+            letter-spacing: -0.02em; /*[cite: 6] */
+            transition: all 0.4s ease; /*[cite: 6] */
         }
 
-        /* 3. DANH SÁCH MENU TRẢI DÀI */
+        @media (prefers-color-scheme: dark) {
+            .title-container h1 {
+                border-left-color: var(--accent-color); /* Sang chế độ tối đổi thanh đứng sang xanh lá[cite: 6] */
+            }
+        }
+
+        /* Khung danh sách chứa các hàng menu */
         .menu-list {
-            display: flex;
-            flex-direction: column;
-            width: 100%;
+            display: flex; /*[cite: 6] */
+            flex-direction: column; /*[cite: 6] */
+            width: 100%; /*[cite: 6] */
+            gap: 20px; /* Tạo khoảng cách rời rạc giữa các Card, xóa bỏ cảm giác basic dính liền[cite: 6] */
         }
 
-        /* Mỗi hàng menu chiếm trọn 100% chiều rộng vùng chứa */
+        /* THIẾT KẾ CARD MENU ĐỘC LẬP - KIẾN TRÚC NỔI KHỐI */
         .menu-row {
-            display: flex;
-            align-items: center;
-            text-decoration: none;
-            padding: 24px 15px; /* Tăng padding để hàng trông thoáng và "full" hơn */
-            border-bottom: 1px solid #16161a; /* Đường kẻ phân tách siêu mảnh */
-            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-            cursor: pointer;
+            display: flex; /*[cite: 6] */
+            align-items: center; /*[cite: 6] */
+            text-decoration: none; /*[cite: 6] */
+            padding: 24px;  /*[cite: 6] */
+            background-color: var(--card-item-bg); /*[cite: 6] */
+            border-radius: 20px; /* Bo góc mềm mại thời thượng[cite: 6] */
+            border: 1px solid var(--border-item); /*[cite: 6] */
+            box-shadow: var(--item-shadow); /*[cite: 6] */
+            position: relative; /*[cite: 6] */
+            overflow: hidden; /*[cite: 6] */
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); /*[cite: 6] */
+            cursor: pointer; /*[cite: 6] */
         }
 
-        /* Đường kẻ trên cùng cho hàng đầu tiên */
         .menu-list .menu-row:first-child {
-            border-top: 1px solid #16161a;
+            border-top: 1px solid var(--border-item); /*[cite: 6] */
         }
 
-        /* Ô chứa ảnh thu nhỏ (Thumbnail) chiếm tỷ lệ cố định */
+        /* Ô chứa ảnh thu nhỏ (Thumbnail) */
         .menu-thumbnail {
-            width: 140px;       /* Tăng kích thước trên màn hình lớn để xứng tầm giao diện Full */
-            height: 84px;       /* Tỷ lệ vàng 5:3 */
-            margin-right: 35px; /* Khoảng cách rộng rãi giữa ảnh và chữ */
-            overflow: hidden;
-            border-radius: 8px;
-            border: 1px solid #222;
-            flex-shrink: 0;     /* Ép ảnh không được méo */
+            width: 150px;        /*[cite: 6] */
+            height: 90px;       /* Tỷ lệ vàng gọn gàng[cite: 6] */
+            margin-right: 30px;  /*[cite: 6] */
+            overflow: hidden; /*[cite: 6] */
+            border-radius: 12px; /* Bo góc ảnh đồng bộ[cite: 6] */
+            border: 1px solid var(--thumbnail-border); /*[cite: 6] */
+            flex-shrink: 0;      /*[cite: 6] */
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.04); /*[cite: 6] */
+            transition: all 0.3s ease; /*[cite: 6] */
         }
 
         .menu-thumbnail img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover; /* Cắt ảnh thông minh vừa vặn với ô chứa */
+            width: 100%; /*[cite: 6] */
+            height: 100%; /*[cite: 6] */
+            object-fit: cover;  /*[cite: 6] */
+            transition: transform 0.4s ease; /*[cite: 6] */
         }
 
         /* Phần chữ tiêu đề menu */
         .menu-text {
-            font-size: 1.3rem; /* Tăng kích thước chữ cho dễ đọc trên màn hình lớn */
-            color: #eeeeee;
-            font-weight: 500;
-            flex-grow: 1;      /* Chiếm trọn phần không gian còn lại ở giữa và bên phải */
-            transition: color 0.2s ease, transform 0.2s ease;
+            font-size: 1.25rem;  /*[cite: 6] */
+            color: var(--text-main); /*[cite: 6] */
+            font-weight: 700; /* Tăng độ đậm để chữ bật lên sắc sảo[cite: 6] */
+            flex-grow: 1;       /*[cite: 6] */
+            padding-right: 40px; /* Nhường không gian cho mũi tên góc phải[cite: 6] */
+            line-height: 1.4; /*[cite: 6] */
+            letter-spacing: -0.01em; /*[cite: 6] */
+            transition: color 0.3s ease; /*[cite: 6] */
         }
 
-        /* 4. HIỆU ỨNG TƯƠNG TÁC (HOVER EFFECT) */
-        .menu-row:hover {
-            background-color: #0d0d11; /* Nền hàng sáng nhẹ lên một chút tạo chiều sâu */
+        /* Mũi tên dẫn đường ẩn bên phải Card con */
+        .menu-row::after {
+            content: '→'; /*[cite: 6] */
+            position: absolute; /*[cite: 6] */
+            right: 30px; /*[cite: 6] */
+            color: var(--text-title); /*[cite: 6] */
+            font-size: 1.5rem; /*[cite: 6] */
+            font-weight: bold; /*[cite: 6] */
+            opacity: 0; /*[cite: 6] */
+            transform: translateX(-15px); /*[cite: 6] */
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); /*[cite: 6] */
         }
 
-        .menu-row:hover .menu-text {
-            color: #00cd6c; /* Chữ chuyển sang màu xanh lá theo thanh tiêu đề */
-            transform: translateX(10px); /* Chữ dịch nhẹ sang phải 10px tạo hiệu ứng chuyển động cực mượt */
+        @media (prefers-color-scheme: dark) {
+            .menu-row::after {
+                color: var(--accent-color); /*[cite: 6] */
+            }
         }
 
         /* ==========================================================================
-           5. BREAKPOINTS RESPONSIVE (TỰ ĐỘNG THÍCH ỨNG THIẾT BỊ)
+           HIỆU ỨNG TƯƠNG TÁC HOVER CAO CẤP CAO CONTRAST
            ========================================================================== */
+        .menu-row:hover {
+            transform: translateY(-6px); /* Card nẩy nhẹ lên không gian 3D[cite: 6] */
+            box-shadow: var(--item-shadow-hover); /*[cite: 6] */
+            border-color: var(--text-title); /* Chuyển màu viền sang tông chủ đạo đậm[cite: 6] */
+            background-color: var(--card-item-bg); /*[cite: 6] */
+        }
 
-        /* --- DÀNH CHO MÀN HÌNH MÁY TÍNH BẢNG VÀ LAPTOP NHỎ (Dưới 992px) --- */
-        @media (max-width: 992px) {
-            .title-container h1 {
-                font-size: 2.2rem;
-            }
-            .menu-thumbnail {
-                width: 110px;
-                height: 66px;
-                margin-right: 25px;
-            }
-            .menu-text {
-                font-size: 1.15rem;
-            }
-            .menu-row {
-                padding: 18px 10px;
+        @media (prefers-color-scheme: dark) {
+            .menu-row:hover {
+                border-color: var(--accent-color); /*[cite: 6] */
             }
         }
 
-        /* --- DÀNH CHO MÀN HÌNH ĐIỆN THOẠI DI ĐỘNG (Dưới 576px) --- */
+        .menu-row:hover .menu-thumbnail img {
+            transform: scale(1.06); /*[cite: 6] */
+        }
+        
+        .menu-row:hover .menu-thumbnail {
+            box-shadow: 0 8px 20px rgba(57, 88, 134, 0.15); /*[cite: 6] */
+        }
+
+        .menu-row:hover .menu-text {
+            color: var(--text-title);  /*[cite: 6] */
+        }
+
+        @media (prefers-color-scheme: dark) {
+            .menu-row:hover .menu-text {
+                color: var(--accent-color); /*[cite: 6] */
+            }
+        }
+
+        .menu-row:hover::after {
+            opacity: 1; /*[cite: 6] */
+            transform: translateX(0); /*[cite: 6] */
+        }
+
+        /* ==========================================================================
+           BREAKPOINTS RESPONSIVE (TỰ ĐỘNG THÍCH ỨNG TRÊN MOBILE)
+           ========================================================================== */
+
+        @media (max-width: 992px) {
+            .title-container h1 {
+                font-size: 2.1rem; /*[cite: 6] */
+            }
+            .menu-thumbnail {
+                width: 130px; /*[cite: 6] */
+                height: 78px; /*[cite: 6] */
+                margin-right: 20px; /*[cite: 6] */
+            }
+            .menu-text {
+                font-size: 1.15rem; /*[cite: 6] */
+            }
+            .menu-row {
+                padding: 20px; /*[cite: 6] */
+            }
+        }
+
+        /* --- TỐI ƯU TRÊN ĐIỆN THOẠI DI ĐỘNG --- */
         @media (max-width: 576px) {
             body {
-                padding: 25px 0;
+                padding: 40px 16px; /*[cite: 6] */
             }
             .wrapper {
-                padding-left: 15px; /* Thu hẹp khoảng cách mép trên điện thoại để tối ưu không gian */
-                padding-right: 15px;
-            }
-            .title-container {
-                margin-bottom: 25px;
-            }
-            .title-container h1 {
-                font-size: 1.8rem;
+                padding-left: 0;  /*[cite: 6] */
+                padding-right: 0; /*[cite: 6] */
             }
             
-            /* CHUYỂN ĐỔI BỐ CỤC: Trên mobile, ảnh và chữ sẽ xếp thành hàng dọc */
+            /* Thu nhỏ tiêu đề và logo tránh tràn hàng trên mobile */
+            .title-container {
+                gap: 12px;
+                margin-bottom: 30px; /*[cite: 6] */
+            }
+
+            .title-logo {
+                width: 40px;
+                height: 40px;
+            }
+
+            .title-container h1 {
+                font-size: 1.5rem;
+                padding-left: 12px;
+                border-left-width: 4px;
+            }
+
+            .menu-list {
+                gap: 16px; /*[cite: 6] */
+            }
+            
             .menu-row {
-                flex-direction: column;
-                align-items: flex-start; /* Căn lề trái toàn bộ */
-                padding: 20px 5px;
-                gap: 15px; /* Tạo khoảng cách giữa ảnh (ở trên) và chữ (ở dưới) */
+                flex-direction: column; /*[cite: 6] */
+                align-items: flex-start;  /*[cite: 6] */
+                padding: 20px; /*[cite: 6] */
+                gap: 16px;  /*[cite: 6] */
             }
 
             .menu-thumbnail {
-                width: 100%; /* Ảnh thumbnail bung rộng 100% màn hình điện thoại nhìn rất đã mắt */
-                height: 160px; /* Tăng chiều cao của ảnh trên mobile */
-                margin-right: 0;
+                width: 100%;  /*[cite: 6] */
+                height: 160px;  /*[cite: 6] */
+                margin-right: 0; /*[cite: 6] */
             }
 
             .menu-text {
-                font-size: 1.1rem;
-                line-height: 1.4;
+                font-size: 1.15rem; /*[cite: 6] */
+                padding-right: 0; /*[cite: 6] */
             }
             
-            /* Trên mobile, tắt hiệu ứng dịch chữ sang phải khi hover để tránh lỗi hiển thị */
-            .menu-row:hover .menu-text {
-                transform: none; 
+            .menu-row:hover {
+                transform: none; /*[cite: 6] */
+            }
+            .menu-row:hover::after {
+                display: none; /*[cite: 6] */
             }
         }
     </style>
@@ -172,59 +314,30 @@
 <body>
 
     <div class="wrapper">
+        
+        <!-- ĐÃ CẬP NHẬT: Thêm khối cấu trúc chứa Logo đồng bộ trước chữ tiêu đề -->
         <div class="title-container">
-            <h1>Menu</h1>
+            <div class="title-logo">
+                <!-- Thay 'logo_truong.png' bằng tên file ảnh thực tế của bạn nếu muốn đổi ảnh -->
+                <img src="nkdmenutong.png" alt="Logo">
+            </div>
+            <h1>HỆ THỐNG KHAI BÁO</h1>
         </div>
 
         <div class="menu-list">
             
             <a href="https://khanhdat01507.github.io/mophongkhaibaohaiquan/" class="menu-row">
                 <div class="menu-thumbnail">
-                    <img src="manu1.png" alt="Menu 1">
+                    <img src="manu1.png" alt="Menu 1"> <!--[cite: 6] -->
                 </div>
-                <div class="menu-text">MÔ PHỎNG HỆ THỐNG KHAI BÁO HẢI QUAN ECUS5 - VNACCS</div>
+                <div class="menu-text">MÔ PHỎNG HỆ THỐNG KHAI BÁO HẢI QUAN ECUS5 - VNACCS</div> <!--[cite: 6] -->
             </a>
 
-            <a href="https://khanhdat01507.github.io/nopthue/" class="menu-row">
+            <a href="index1.html" class="menu-row">
                 <div class="menu-thumbnail">
-                    <img src="menu2.png" alt="Menu 2">
+                    <img src="menu2.png" alt="Menu 2"> <!--[cite: 6] -->
                 </div>
-                <div class="menu-text">PHẦN MỀM NỘP THUẾ & THÔNG QUAN HẢI QUAN</div>
-            </a>
-
-            <a href=" " class="menu-row">
-                <div class="menu-thumbnail">
-                    <img src=" " alt="Menu 3">
-                </div>
-                <div class="menu-text">Menu 3 </div>
-            </a>
-
-            <a href=" " class="menu-row">
-                <div class="menu-thumbnail">
-                    <img src=" " alt="Menu 4">
-                </div>
-                <div class="menu-text">Menu 4 </div>
-            </a>
-
-            <a href=" " class="menu-row">
-                <div class="menu-thumbnail">
-                    <img src=" " alt="Menu 4">
-                </div>
-                <div class="menu-text">Menu 5 </div>
-            </a>
-
-            <a href=" " class="menu-row">
-                <div class="menu-thumbnail">
-                    <img src=" " alt="Menu 5">
-                </div>
-                <div class="menu-text">Menu 6 </div>
-            </a>
-
-            <a href=" " class="menu-row">
-                <div class="menu-thumbnail">
-                    <img src=" " alt="Menu 5">
-                </div>
-                <div class="menu-text">Menu 7 </div>
+                <div class="menu-text">PHẦN MỀM NỘP THUẾ & THÔNG QUAN HẢI QUAN</div> <!--[cite: 6] -->
             </a>
 
         </div>
